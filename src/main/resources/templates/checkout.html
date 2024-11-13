@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Realizando pago')}">
+    <title>Checkout - Cherries Bakery</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+    
+    <main class="checkout-container">
+        <div class="checkout-header">
+            <a th:href="@{/cart}" class="back-link">
+                <span class="icon">←</span>
+                Realizando pago
+            </a>
+        </div>
+
+        <h2 class="checkout-subtitle">Seleccione el método de su preferencia</h2>
+        
+        <!-- Display error message if any -->
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}">Error message</p>
+        </div>
+        
+        <form th:action="@{/checkout}" method="post" class="payment-methods">
+            <!-- Existing payment options -->
+            <div class="payment-option">
+                <input type="radio" name="paymentMethod" id="sinpe" value="sinpe" checked>
+                <label for="sinpe" class="payment-label">
+                    <img th:src="@{/images/sinpe-logo.png}" alt="SINPE móvil" class="payment-icon">
+                    <span>SINPE móvil</span>
+                </label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="paymentMethod" id="cash" value="cash">
+                <label for="cash" class="payment-label">
+                    <span class="payment-icon">💵</span>
+                    <span>Efectivo</span>
+                </label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="paymentMethod" id="apple-pay" value="apple-pay">
+                <label for="apple-pay" class="payment-label">
+                    <img th:src="@{/images/apple-pay.png}" alt="Apple Pay" class="payment-icon">
+                    <span>Apple Pay</span>
+                </label>
+            </div>
+
+            <!-- Display saved cards if available -->
+            <div th:if="${paymentMethods != null and not #lists.isEmpty(paymentMethods)}">
+                <div th:each="card : ${paymentMethods}" class="payment-option">
+                    <input type="radio" name="paymentMethod" th:id="${'card-' + card.id}" th:value="${'card-' + card.id}">
+                    <label th:for="${'card-' + card.id}" class="payment-label">
+                        <span class="payment-icon">💳</span>
+                        <span th:text="${'•••• •••• •••• ' + card.cardNumber}">•••• •••• •••• 1234</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Option to add a new card -->
+            <div class="payment-option">
+                <input type="radio" name="paymentMethod" id="new-card" value="new-card">
+                <label for="new-card" class="payment-label">
+                    <span class="payment-icon">💳</span>
+                    <span>Agregar nueva tarjeta</span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn-confirm">Confirmar pago</button>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
