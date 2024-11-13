@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Cherries Bakery'">Cherries Bakery</title>
+    
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <link rel="stylesheet" th:href="@{/css/product-list.css}">
+    <link rel="stylesheet" th:href="@{/css/checkout.css}">
+    <link rel="stylesheet" th:href="@{/css/payment-form.css}">
+    <link rel="stylesheet" th:href="@{/css/order-confirmation.css}">
+    <link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+
+<body>
+    <nav th:fragment="navigation" class="main-nav">
+        <div class="nav-container">
+            <a th:href="@{/}" class="logo">Cherries Bakery</a>
+            
+            <div class="nav-links">
+                <a th:href="@{/products}">Productos</a>
+                <a th:href="@{/about}">Acerca de</a>
+                <a th:href="@{/contact}">Contacto</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a th:href="@{/cart}" class="cart-icon">
+                    <span class="icon">🛒</span>
+                    <span class="cart-count" th:text="${session.cartCount ?: 0}">0</span>
+                </a>
+                
+            <div th:if="${#authorization.expression('isAuthenticated()')}" class="user-menu dropdown">
+                <button class="dropbtn" th:text="${#authentication.principal.name}">Usuario</button>
+                <div class="dropdown-content">
+                    <a th:href="@{/account/profile}">Perfil</a>
+                    <a th:href="@{/account/orders}">Pedidos</a>
+                    <a href="#" onclick="logout(); return false;">Cerrar sesión</a>
+                </div>
+            </div>
+                
+                <div th:unless="${#authorization.expression('isAuthenticated()')}" class="auth-buttons">
+                    <a th:href="@{/login}" class="btn-link">Iniciar sesión</a>
+                    <a th:href="@{/register}" class="btn-primary">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <footer th:fragment="footer" class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Cherries Bakery</h3>
+                <p>Deliciosos postres y pasteles hechos con amor.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a th:href="@{/products}">Productos</a></li>
+                    <li><a th:href="@{/about}">Acerca de</a></li>
+                    <li><a th:href="@{/contact}">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contáctenos</h3>
+                <p>Teléfono: 1234-5678</p>
+                <p>Email: info@cherriesbakery.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cherries Bakery. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <th:block th:fragment="scripts">
+        <script th:inline="javascript">
+            function handleUserMenuChange(select) {
+                if (select.value === 'logout') {
+                    // Create and submit a form for logout
+                    var form = document.createElement('form');
+                    form.method = 'post';
+                    form.action = /*[[@{/logout}]]*/ '/logout';
+                    document.body.appendChild(form);
+                    form.submit();
+                } else if (select.value) {
+                    window.location.href = select.value;
+                }
+            }
+        </script>
+    </th:block>
+</body>
+</html>

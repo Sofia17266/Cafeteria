@@ -1,0 +1,257 @@
+/* layout.css */
+/* Base Layout */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+}
+
+/* Navigation */
+.main-nav {
+    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    color: var(--secondary-color);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    text-decoration: none;
+    margin-right: auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin: 0 auto;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-left: auto;
+}
+
+.cart-icon {
+    position: relative;
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: var(--font-size-xs);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.auth-buttons .btn-link {
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    background-color: var(--primary-color);
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.catalog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Footer */
+.main-footer {
+    background-color: white;
+    padding: var(--spacing-xl) 0;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.footer-section h3 {
+    color: var(--secondary-color);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-section p,
+.footer-section a {
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    margin: var(--spacing-xs) 0;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: var(--spacing-xl) auto 0;
+    padding: var(--spacing-lg) var(--spacing-lg) 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: var(--text-color);
+    font-size: var(--font-size-sm);
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        height: auto;
+        padding: var(--spacing-md);
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+    }
+
+    .nav-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .auth-buttons .btn-link,
+    .auth-buttons .btn-primary {
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--spacing-lg);
+    }
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: transparent;
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+}
+
+/* Dropdown Styles */
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: transparent;
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    /* Ensure the button has sufficient height */
+    line-height: 1;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: var(--box-shadow);
+    z-index: 1000;
+    margin-top: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: var(--text-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    display: block;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: var(--background-hover);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    color: var(--secondary-color);
+}

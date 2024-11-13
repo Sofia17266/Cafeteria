@@ -1,0 +1,133 @@
+/* Auth Layout */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-color);
+}
+
+.auth-header {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.auth-header .logo {
+    display: inline-block;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.auth-header .logo h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.auth-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 480px;
+}
+
+.auth-options {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.auth-option {
+    display: block;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.auth-option:hover {
+    border-color: var(--secondary-color);
+    background-color: var(--primary-color);
+}
+
+.auth-option h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--secondary-color);
+}
+
+.auth-option p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.auth-form {
+    margin: 2rem 0;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.auth-info {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.auth-footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-light);
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-muted { color: var(--text-light); }
+.mb-6 { margin-bottom: 1.5rem; }
+.w-full { width: 100%; }

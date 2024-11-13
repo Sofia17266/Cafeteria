@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Cherries Bakery'">Cherries Bakery</title>
+    
+    <!-- Common CSS -->
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+
+<!-- Simple Header Fragment -->
+<header th:fragment="header">
+    <div class="auth-header">
+        <a th:href="@{/}" class="logo">
+            <h1>Cherries Bakery</h1>
+        </a>
+    </div>
+</header>
+
+<!-- Simple Footer Fragment -->
+<footer th:fragment="footer">
+    <div class="auth-footer">
+        <p>&copy; 2024 Cherries Bakery. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</html>
