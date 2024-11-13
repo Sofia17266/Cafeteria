@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Categorías de Productos')}">
+    <title>Categorías de Productos - Cherries Bakery</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+    
+    <main class="catalog-container">
+        <h1 class="catalog-title">Nuestros Productos</h1>
+        
+        <div class="categories-grid">
+            <a th:each="category : ${categories}" 
+               th:href="@{'/products/category/' + ${category.id}}" 
+               class="category-card">
+                <h2 class="category-name" th:text="${category.name}">Nombre de la Categoría</h2>
+            </a>
+        </div>
+    </main>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

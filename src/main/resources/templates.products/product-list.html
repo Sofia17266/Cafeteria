@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Productos')}">
+    <title>Productos - Cherries Bakery</title>
+    <link rel="stylesheet" th:href="@{/css/product-list.css}">
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+    
+    <main class="catalog-container">
+        <h1 class="catalog-title" th:text="${category != null ? category.name : subcategory.name}">Productos</h1>
+        
+        <div class="products-grid">
+            <div th:each="product : ${products}" class="product-card">
+                <div class="product-image-container">
+                    <img th:src="@{'/images/products/' + ${product.imageUrl}}" 
+                         th:alt="${product.name}" 
+                         class="product-image">
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name" th:text="${product.name}">Nombre del Producto</h2>
+                    <p class="product-description" th:text="${product.description}">Descripción del producto</p>
+                    <div class="product-footer">
+                        <p class="product-price">
+                            <span class="currency">₡</span>
+                            <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">0</span>
+                        </p>
+                        <form th:action="@{/cart/add}" method="post" class="add-to-cart-form"
+                              onsubmit="return updateCart(this, event)">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <button type="submit" class="btn-order">Ordenar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <script th:inline="javascript">
+    function updateCart(form, event) {
+        event.preventDefault();
+        
+        const button = form.querySelector('button');
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Agregando...';
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.textContent = data.cartCount;
+            cartCount.classList.add('updated');
+            
+            button.textContent = '¡Agregado!';
+            button.classList.add('success');
+            
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = originalText;
+                button.classList.remove('success');
+            }, 2000);
+            
+            setTimeout(() => {
+                cartCount.classList.remove('updated');
+            }, 300);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            button.disabled = false;
+            button.textContent = 'Error - Intente de nuevo';
+            button.classList.add('error');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('error');
+            }, 2000);
+        });
+        
+        return false;
+    }
+    </script>
+</body>
+</html>

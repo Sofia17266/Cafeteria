@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Productos')}">
+    <title>Productos - Cherries Bakery</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+    
+    <main class="catalog-container">
+        <h1 class="catalog-title">Nuestros Productos</h1>
+        
+        <div class="categories-list">
+            <div th:each="category : ${categories}" class="category-section">
+                <h2 class="category-title" th:text="${category.name}">Categoría</h2>
+                
+                <!-- Category with subcategories -->
+                <div th:if="${not #lists.isEmpty(category.subcategories)}" class="subcategories-grid">
+                    <div th:each="subcategory : ${category.subcategories}" class="subcategory-card">
+                        <h3 class="subcategory-title" th:text="${subcategory.name}">Subcategoría</h3>
+                        <div class="products-grid">
+                            <div th:each="product : ${subcategory.products}" class="product-card">
+                                <img th:src="@{/images/} + ${product.imageUrl}" th:alt="${product.name}" class="product-image">
+                                <div class="product-info">
+                                    <h4 class="product-name" th:text="${product.name}">Producto</h4>
+                                    <p class="product-description" th:text="${product.description}">Descripción</p>
+                                    <div class="product-actions">
+                                        <p class="product-price" th:text="${'₡' + product.price}">₡0</p>
+                                        <form th:action="@{/cart/add}" method="post" class="add-to-cart-form"
+                                              onsubmit="return updateCart(this, event)">
+                                            <input type="hidden" name="productId" th:value="${product.id}">
+                                            <button type="submit" class="btn-primary">Ordenar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Category without subcategories -->
+                <div th:if="${#lists.isEmpty(category.subcategories)}" class="products-grid">
+                    <div th:each="product : ${category.products}" class="product-card">
+                        <img th:src="@{/images/} + ${product.imageUrl}" th:alt="${product.name}" class="product-image">
+                        <div class="product-info">
+                            <h4 class="product-name" th:text="${product.name}">Producto</h4>
+                            <p class="product-description" th:text="${product.description}">Descripción</p>
+                            <div class="product-actions">
+                                <p class="product-price" th:text="${'₡' + product.price}">₡0</p>
+                                <form th:action="@{/cart/add}" method="post" class="add-to-cart-form"
+                                      onsubmit="return updateCart(this, event)">
+                                    <input type="hidden" name="productId" th:value="${product.id}">
+                                    <button type="submit" class="btn-primary">Ordenar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <script th:inline="javascript">
+    function updateCart(form, event) {
+        event.preventDefault();
+        
+        const button = form.querySelector('button');
+        button.disabled = true;
+        button.textContent = 'Agregando...';
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update cart count in navigation
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.textContent = data.cartCount;
+            cartCount.classList.add('updated');
+            
+            // Show success feedback
+            button.textContent = '¡Agregado!';
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = 'Ordenar';
+            }, 2000);
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                cartCount.classList.remove('updated');
+            }, 300);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            button.disabled = false;
+            button.textContent = 'Error - Intente de nuevo';
+        });
+        
+        return false;
+    }
+    </script>
+</body>
+</html>

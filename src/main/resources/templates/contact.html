@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Contáctenos')}">
+    <title>Contáctenos - Cherries Bakery</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+    
+    <main class="info-container">
+        <div class="info-content">
+            <h1>Contáctenos</h1>
+            
+            <div class="contact-info">
+                <div class="contact-section">
+                    <h2>Ubicación</h2>
+                    <p>C. los Almendros, San José</p>
+                    <p>Santa Ana</p>
+                </div>
+
+                <div class="contact-section">
+                    <h2>Teléfono</h2>
+                    <p>1234-5678</p>
+                </div>
+
+                <div class="contact-section">
+                    <h2>Horario</h2>
+                    <p>Lunes a Viernes: 7:00 AM - 7:00 PM</p>
+                    <p>Sábados y Domingos: 8:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Acerca de')}">
+    <title>Acerca de - Cherries Bakery</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+    
+    <main class="info-container">
+        <div class="info-content">
+            <h1>Acerca de Cherries Bakery</h1>
+            <p>En Cherries Bakery, nos apasiona crear experiencias únicas alrededor de una taza de café. Nacimos con el objetivo de ofrecer los mejores productos de repostería, donde cada bocado refleja nuestra dedicación y un amor por la autenticidad. Desde nuestros inicios, hemos trabajado con ingredientes locales para asegurarnos de que cada producto sea seleccionado con cuidado y responsabilidad.</p>
+            
+            <p>Nuestro equipo está comprometido en brindar no solo un excelente café y deliciosa repostería, sino también un lugar donde puedes relajarte, compartir momentos especiales y simplemente disfrutar de un buen rato.</p>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
