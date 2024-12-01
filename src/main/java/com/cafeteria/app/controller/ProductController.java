@@ -1,5 +1,7 @@
 package com.cafeteria.app.controller;
 
+import com.cafeteria.app.dto.CategoryDTO;
+import com.cafeteria.app.dto.ProductDTO;
 import com.cafeteria.app.model.Category;
 import com.cafeteria.app.model.Product;
 import com.cafeteria.app.model.Subcategory;
@@ -17,6 +19,7 @@ public class ProductController {
 
     private final CategoryService categoryService;
     private final ProductService productService;
+   
 
     @Autowired
     public ProductController(CategoryService categoryService, ProductService productService) {
@@ -48,6 +51,45 @@ public class ProductController {
             return "products/subcategories";
         }
     }
+    
+    
+    
+    
+    
+    // save and delete for DTO category entity
+    @GetMapping("/elimina/category/{id}")
+    public String elimina(Category category)
+    {
+        categoryService.delete(category);
+                return "redirect:/products";            
+    }
+    // save category method, careful with this path
+    @PostMapping("/guardar")
+    public String Guardarcategory(CategoryDTO category)
+    {
+        categoryService.save(category);
+        return "redirect:/products";
+    }
+    
+    
+    //save and delete for DTO product entity
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(Product products)
+    {
+        productService.delete(products);
+        return "redirect:/products";
+    }
+    
+    @PostMapping("/Guardar")
+    public String Guardar(ProductDTO product)
+    {
+        productService.save(product);
+        return "redirect:/products";
+                 
+    }
+    
+    
+    
 
     @GetMapping("/subcategory/{id}")
     public String showSubcategory(@PathVariable Long id, Model model) {
