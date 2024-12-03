@@ -5,19 +5,23 @@
 </head>
 <body>
     <nav th:replace="~{fragments/layout :: navigation}"></nav>
-    
+
     <main class="catalog-container">
-        <h1 class="catalog-title" th:text="${category.name}">Nombre de la Categoría</h1>
-        
+        <h1 class="catalog-title" th:text="${category.name}">
+            Nombre de la Categoría
+        </h1>
+
         <div class="subcategories-grid">
             <a th:each="subcategory : ${category.subcategories}" 
                th:href="@{'/products/subcategory/' + ${subcategory.id}}" 
                class="category-card">
-                <h2 class="category-name" th:text="${subcategory.name}">Nombre de la Subcategoría</h2>
+                <h2 class="category-name" th:text="${subcategory.name}">
+                    Nombre de la Subcategoría
+                </h2>
             </a>
         </div>
     </main>
-    
+
     <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>
