@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findByName(String name);
     Optional<Subcategory> findSubcategoryById(Long id);
+    @Override
+    public void delete(Category category);
 }
