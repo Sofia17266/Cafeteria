@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Carrito')}">
+    <title>Carrito - Cherries Bakery</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navigation}"></nav>
+
+    <main class="cart-container">
+        <h1 class="cart-title">Carrito</h1>
+        
+        <div th:if="${cart.items.isEmpty()}" class="cart-empty">
+            <p>Tu carrito está vacío</p>
+            <a th:href="@{/products}" class="btn-primary">Ver Productos</a>
+        </div>
+
+        <div th:unless="${cart.items.isEmpty()}" class="cart-content">
+            <div class="cart-items">
+                <div th:each="product : ${products}" class="cart-item">
+                    <div class="cart-item-image">
+                        <img th:src="@{'/images/products/' + ${product.imageUrl}}" 
+                             th:alt="${product.name}">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3 th:text="${product.name}">Nombre del Producto</h3>
+                        <p class="cart-item-description" th:text="${product.description}">Descripción</p>
+                        <div class="cart-item-actions">
+                            <div class="cart-item-price">
+                                <span class="currency">₡</span>
+                                <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">0</span>
+                            </div>
+                            <div class="quantity-controls">
+                                <button type="button" class="btn-quantity" 
+                                        th:onclick="'updateQuantity(' + ${product.id} + ', -1)'">-</button>
+                                <span class="quantity" th:text="${cart.items[product.id]}">1</span>
+                                <button type="button" class="btn-quantity"
+                                        th:onclick="'updateQuantity(' + ${product.id} + ', 1)'">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span class="total-label">TOTAL</span>
+                    <div class="total-amount">
+                        <span class="currency">₡</span>
+                        <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}">0</span>
+                    </div>
+                </div>
+                <a th:href="@{/checkout}" class="btn-checkout">Continuar</a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <script th:inline="javascript">
+    function updateQuantity(productId, change) {
+        const url = change > 0 ? '/cart/add' : '/cart/remove';
+        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: 'productId=' + productId
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.cartCount >= 0) {
+                location.reload();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+</body>
+</html>
